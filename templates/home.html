@@ -7,14 +7,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='main.css')}}">
     <title>
-        New Era Logo Validator
+        Logo Validator
     </title>
 </head>
 
 <body>
+    <div class="container">
+            <header class="site-header">
+                    <div class="container">
+                    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+                        <img src="{{url_for('static', filename='site-logos/new_era.png')}}" width="80" height="40">
+                            <a class="navbar-brand ml-6" href="/">Logo Validator</a>
+                        </div>
+                    </nav>
+                </header>
         <form method="POST" action="" enctype="multipart/form-data">
             <div class="form-group">
                     {{form.picture.label()}}
@@ -28,12 +37,31 @@
                 <div class="form-group">
                         {{form.submit(class="btn btn-outline-info")}}
                 </div>
+        </form>
+        <main role="main" class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category,message in messages %}
+                        <div class="alert alert-{{category}}">
+                            {{message}}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
+            </main>
+        <hr/>
                 {% if picture %}
                 <img src="{{url_for('static', filename='images/' + picture)}}" width="340" height="200">
-                <p>Likelihood Score = {{score}}%</p>
-                <p>What is it = {{bd}}</p>
+                <hr/>
+                <h5>What is it = <b>{{bd}}</b></h5>
+                <h5>Likelihood Score = <b>{{score}}%</b></h5>
                 {% endif %}
-        </form>
+            </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
